@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Post Details</title>
+  </head>
+  <body>
+	<p><p>Post_Title:</p><p id="postTitle"></p></p>
+    
+    <p><p>Post_Body:</p><p id="postBody"></p></p>
+    
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const postId = urlParams.get("id");
+
+      fetch(`https://jsonplaceholder.typicode.com/posts/${postId}?_embed=comments`)
+        .then(response => response.json())
+        .then(post => {
+          const postTitle = document.querySelector("#postTitle");
+          const postBody = document.querySelector("#postBody");
+          const postAuthor = document.querySelector("#postAuthor");
+
+          postTitle.textContent = post.title;
+          postBody.textContent = post.body;
+          postAuthor.textContent = post.user.name;
+        })
+        .catch(error => console.log(error));
+    </script>
+  </body>
+</html>
